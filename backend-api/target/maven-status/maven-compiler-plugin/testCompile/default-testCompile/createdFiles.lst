@@ -1,0 +1,6 @@
+com\digitalbank\backend_api\BackendApiApplicationTests.class
+com\digitalbank\backend_api\auth\service\DatabaseUserDetailsServiceTest.class
+com\digitalbank\backend_api\config\security\service\TokenServiceTest$1.class
+com\digitalbank\backend_api\notification\publisher\NotificationEventPublisherTest.class
+com\digitalbank\backend_api\transfer\service\TransferServiceTest.class
+com\digitalbank\backend_api\config\security\service\TokenServiceTest.class

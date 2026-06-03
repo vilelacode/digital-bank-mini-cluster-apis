@@ -1,0 +1,26 @@
+services:
+  mysql:
+    image: mysql:8.0.36
+    container_name: digital-bank-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: digital_bank
+      MYSQL_USER: digital_bank
+      MYSQL_PASSWORD: digital_bank
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - digital-bank-mysql-data:/var/lib/mysql
+
+  bankrabbitmq:
+    image: rabbitmq:3-management
+    container_name: digital-bank-rabbitmq
+    ports:
+      - "${RABBITMQ_PORT:-5673}:5672"
+      - "${RABBITMQ_MANAGEMENT_PORT:-15673}:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+
+volumes:
+  digital-bank-mysql-data:

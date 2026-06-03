@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME:backend-api}
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/digital_bank?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:digital_bank}
+    password: ${DB_PASSWORD:digital_bank}
+    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:validate}
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: ${HIBERNATE_FORMAT_SQL:true}
+        dialect: ${HIBERNATE_DIALECT:org.hibernate.dialect.MySQLDialect}
+        type:
+          preferred_uuid_jdbc_type: ${HIBERNATE_PREFERRED_UUID_JDBC_TYPE:CHAR}
+
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    locations: ${FLYWAY_LOCATIONS:classpath:db/migration}
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5673}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_ENDPOINTS:health,info,metrics}
+  endpoint:
+    health:
+      show-details: ${ACTUATOR_HEALTH_SHOW_DETAILS:always}
+      probes:
+        enabled: true
+
+app:
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:backend-api}
+      expiration: ${JWT_EXPIRATION:15m}
+      secret: ${JWT_SECRET:change-this-secret-change-this-secret}
+
+  rabbitmq:
+    exchange: ${APP_RABBITMQ_EXCHANGE:digital-bank.notification.exchange}
+    routing-key: ${APP_RABBITMQ_ROUTING_KEY:notification.transfer.completed}

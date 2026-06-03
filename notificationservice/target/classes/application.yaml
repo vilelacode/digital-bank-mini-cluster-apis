@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: notification-service-api
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    listener:
+      simple:
+        acknowledge-mode: manual
+        retry:
+          enabled: false
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2s
+
+server:
+  port: ${SERVER_PORT:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  health:
+    rabbit:
+      enabled: true
+    redis:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.seuusuario.notificationservice: DEBUG
+    org.springframework.amqp: INFO
+    org.springframework.data.redis: INFO
+
+app:
+  rabbitmq:
+    exchange: ${APP_RABBITMQ_EXCHANGE:digital-bank.notification.exchange}
+    queue: ${APP_RABBITMQ_QUEUE:notification-service.queue}
+    routing-key: ${APP_RABBITMQ_ROUTING_KEY:notification.requested}
+    dead-letter-exchange: ${APP_RABBITMQ_DLX:digital-bank.notification.dlx}
+    dead-letter-queue: ${APP_RABBITMQ_DLQ:notification-service.dlq}
+    dead-letter-routing-key: ${APP_RABBITMQ_DLQ_ROUTING_KEY:notification.failed}
+
+  idempotency:
+    key-prefix: ${APP_IDEMPOTENCY_KEY_PREFIX:notification:idempotency:}
+    ttl: ${APP_IDEMPOTENCY_TTL:24h}
+
+  notification:
+    max-attempts: ${APP_NOTIFICATION_MAX_ATTEMPTS:3}

@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+# ----------------------------------------------------------------------------
+# Maven Wrapper script
+# Automatically added by assistant
+# ----------------------------------------------------------------------------
+set -e
+
+PRG="$(dirname "$0")"
+PROGNAME="$(basename "$0")"
+
+# Resolve symbolic links
+while [ -h "$PRG" ]; do
+  ls=`ls -ld "$PRG"`
+  link=`expr "$ls" : '.*-> \(.*\)$'`
+  if expr "$link" : '/.*' > /dev/null; then
+    PRG="$link"
+  else
+    PRG="$(dirname "$PRG")/$link"
+  fi
+done
+
+MAVEN_PROJECTBASEDIR="$(cd "$PRG" >/dev/null && pwd -P)"
+
+WRAPPER_DIR="$MAVEN_PROJECTBASEDIR/.mvn/wrapper"
+
+if [ -n "$JAVA_HOME" ]; then
+  JAVA_CMD="$JAVA_HOME/bin/java"
+else
+  JAVA_CMD=java
+fi
+
+exec "$JAVA_CMD" -cp "$WRAPPER_DIR/maven-wrapper.jar" org.apache.maven.wrapper.MavenWrapperMain "$@"
+
