@@ -1,5 +1,23 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+*
+!.gitignore
+
+tasks.xml
+usage.statistics.xml
+shelf/
+httpRequests/
+
+gradle.xml
+
+*.iml
+*.iws
+idea.log
+log/
+
+*.jks
+*.keystore
+*.pem
+certs/
+
+*.tmp
+*.temp
+
