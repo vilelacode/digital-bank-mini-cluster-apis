@@ -18,6 +18,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -39,6 +41,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+//@SpringBootTest
 class TransferServiceTest {
 
     @Mock
@@ -53,7 +56,7 @@ class TransferServiceTest {
     @Mock
     private NotificationEventPublisher notificationEventPublisher;
 
-    @InjectMocks
+    @Autowired
     private TransferService transferService;
 
     @Captor
@@ -75,6 +78,12 @@ class TransferServiceTest {
         request = new TransferRequest(fromId, toId, new BigDecimal("125.50"));
         fromAccount = account(fromId, "Alice", "alice@bank.com", new BigDecimal("1000.00"));
         toAccount = account(toId, "Bob", "bob@bank.com", new BigDecimal("200.00"));
+    }
+
+    @Test
+    void shouldCreateTransfer() {
+        TransferResponse response =
+                transferService.createTransfer("idem-2", request);
     }
 
     @Test
